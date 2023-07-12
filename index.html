@@ -30,12 +30,6 @@ let table = new Tabulator("#table", {
     {title:"FC", field:"FC", sorter:"string"},
     {title:"Combo", field:"Combo", sorter:"number"},
     {title:"Acc", field:"Acc", sorter:"number"},
-    {title:"300", field:"300", sorter:"number"},
-    {title:"100", field:"100", sorter:"number"},
-    {title:"50", field:"50", sorter:"number"},
-    {title:"Geki", field:"Geki", sorter:"number"},
-    {title:"Katu", field:"Katu", sorter:"number"},
-    {title:"Miss", field:"Miss", sorter:"number"},
     {title:"Score", field:"Score", sorter:"number"},
     {title:"Mode", field:"Mode", sorter:"string"},
     {title:"Mods", field:"Mods", sorter:"string"},
@@ -83,29 +77,27 @@ function updateTable(){
 			for(let j = 0; j != q[i].scores.length; j++){
 				let b = beatmaps.parseBeatmap(bm[q[i].Hash]);
 				let s = q[i].scores[j];
-				d.push({
-					Player: s.Player,
-					SR: b.SR[s.Mode][OsuModsSRAffecting(s.Mods)] ?? 0,
-					FC: s.FullCombo,
-					Combo: s.Combo,
-					Acc: OsuAcc(s),
-					300: s[300],
-					100: s[100],
-					50: s[50],
-					Geki: s.Geki,
-					Katu: s.Katu,
-					Miss: s.Miss,
-					Score: s.Score,
-					Mode: ["Standard", "Taiko", "CTB", "Mania"][s.Mode],
-					Mods: OsuModsToString(s.Mods),
-					BeatmapID: b.ID,
-					ScoreID: s.ScoreID,
-					Mapname: b.SongTitle,
-					Difficulty: b.Difficulty,
-					Link: "https://osu.ppy.sh/b/" + b.ID
-				})
+				if( s.Mode == 3 ) {
+					d.push({
+						Player: s.Player,
+						SR: b.SR[s.Mode][OsuModsSRAffecting(s.Mods)] ?? 0,
+						FC: s.FullCombo,
+						Combo: s.Combo,
+						Acc: OsuAcc(s),
+						Score: s.Score,
+						Mode: ["Standard", "Taiko", "CTB", "Mania"][s.Mode],
+						Mods: OsuModsToString(s.Mods),
+						BeatmapID: b.ID,
+						ScoreID: s.ScoreID,
+						Mapname: b.SongTitle,
+						Difficulty: b.Difficulty,
+						Link: "https://osu.ppy.sh/b/" + b.ID
+					})
+				}
 			}
 	}
 	table.setData(d);
+
+	console.log(d);
 }
 </script>
